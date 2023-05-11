@@ -1,4 +1,4 @@
-package apitest.usertest;
+package api_test.user_test;
 
 
 import io.qameta.allure.Description;
@@ -8,10 +8,10 @@ import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.checkapi.user.CreateUser;
-import ru.checkapi.user.GeneratorRandom;
-import ru.checkapi.user.User;
-import ru.checkapi.user.UserCreds;
+import ru.check_api.user.CreateUser;
+import ru.check_api.user.GeneratorRandom;
+import ru.check_api.user.User;
+import ru.check_api.user.UserCreds;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -25,8 +25,9 @@ public class ChangeDataUserTest {
     public void setUp() {
         user = new User();
         createUser = new GeneratorRandom().getCreateUser();
-        userCreds = new  UserCreds();
+        userCreds = new UserCreds();
     }
+
     @Test
     @DisplayName("Изменение данных авторизованного пользователя:эндпоинт api/auth/user")
     @Description("Проверка ожидаемого результата: statusCode и body")
@@ -47,9 +48,9 @@ public class ChangeDataUserTest {
         responseUpdate.assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED).body("success", is(false))
                 .and().body("message", is("You should be authorised"));
     }
+
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         user.userDelete(bearerToken);
     }
 }

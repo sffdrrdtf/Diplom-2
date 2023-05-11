@@ -1,4 +1,4 @@
-package apitest.orderstest;
+package api_test.orders_test;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -7,11 +7,11 @@ import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.checkapi.order.CreateOrder;
-import ru.checkapi.order.CreateOrderApi;
-import ru.checkapi.user.CreateUser;
-import ru.checkapi.user.GeneratorRandom;
-import ru.checkapi.user.User;
+import ru.check_api.order.CreateOrder;
+import ru.check_api.order.CreateOrderApi;
+import ru.check_api.user.CreateUser;
+import ru.check_api.user.GeneratorRandom;
+import ru.check_api.user.User;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -34,7 +34,7 @@ public class OrdersTest {
     @DisplayName("Получение заказа авторизованного пользователя: эндпоинт api/orders")
     @Description("Проверка ожидаемого результата: statusCode и body")
     public void getOrdersUserWithAuthTest() {
-        ValidatableResponse response =  user.requestCreateUser(createUser);
+        ValidatableResponse response = user.requestCreateUser(createUser);
         bearerToken = response.extract().path("accessToken");
         User.requestCreateLogin(createUser);
         CreateOrderApi.createOrder(createOrder, bearerToken);
@@ -46,12 +46,13 @@ public class OrdersTest {
     @DisplayName("Получение заказа неавторизованного пользователя: эндпоинт api/orders")
     @Description("Проверка ожидаемого результата: statusCode и body")
     public void getOrdersUserWithoutAuthTest() {
-        ValidatableResponse response =  user.requestCreateUser(createUser);
+        ValidatableResponse response = user.requestCreateUser(createUser);
         bearerToken = response.extract().path("accessToken");
         ValidatableResponse responseOrders = createOrderApi.createOrdersWithoutAuth();
         responseOrders.assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED).body("success", is(false))
                 .and().body("message", is("You should be authorised"));
     }
+
     @After
     public void tearDown() {
         user.userDelete(bearerToken);

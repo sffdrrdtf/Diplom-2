@@ -1,4 +1,4 @@
-package ru.checkapi.order;
+package ru.check_api.order;
 
 import java.util.ArrayList;
 import java.util.List;

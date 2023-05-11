@@ -1,4 +1,4 @@
-package apitest.orderstest;
+package api_test.orders_test;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -7,11 +7,11 @@ import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.checkapi.order.CreateOrder;
-import ru.checkapi.order.CreateOrderApi;
-import ru.checkapi.user.CreateUser;
-import ru.checkapi.user.GeneratorRandom;
-import ru.checkapi.user.User;
+import ru.check_api.order.CreateOrder;
+import ru.check_api.order.CreateOrderApi;
+import ru.check_api.user.CreateUser;
+import ru.check_api.user.GeneratorRandom;
+import ru.check_api.user.User;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ import static org.hamcrest.CoreMatchers.is;
 public class CreateOrderTest {
     CreateUser createUser;
     CreateOrder createOrder;
-     User user;
-     CreateOrderApi createOrderApi;
+    User user;
+    CreateOrderApi createOrderApi;
     private String bearerToken;
 
     @Before
@@ -37,10 +37,10 @@ public class CreateOrderTest {
     @Description("Проверка ожидаемого результата: statusCode и body")
     public void createOrderTest() {
         listIngredient();
-        ValidatableResponse response =  user.requestCreateUser(createUser);
+        ValidatableResponse response = user.requestCreateUser(createUser);
         bearerToken = response.extract().path("accessToken");
         User.requestCreateLogin(createUser);
-        ValidatableResponse responseCreateOrder = CreateOrderApi.createOrder(createOrder,bearerToken);
+        ValidatableResponse responseCreateOrder = CreateOrderApi.createOrder(createOrder, bearerToken);
         responseCreateOrder.assertThat().statusCode(HttpStatus.SC_OK).body("success", is(true));
     }
 
@@ -48,7 +48,7 @@ public class CreateOrderTest {
     @DisplayName("Создание заказа без добавления ингредиентов: эндпоинт api/orders")
     @Description("Проверка ожидаемого результата: statusCode и body")
     public void createOrderWithoutIngredientTest() {
-        ValidatableResponse response =  user.requestCreateUser(createUser);
+        ValidatableResponse response = user.requestCreateUser(createUser);
         bearerToken = response.extract().path("accessToken");
         ValidatableResponse responseCreateOrder = CreateOrderApi.createOrder(createOrder, bearerToken);
         responseCreateOrder.assertThat().statusCode(HttpStatus.SC_BAD_REQUEST).body("success", is(false))
@@ -60,7 +60,7 @@ public class CreateOrderTest {
     @Description("Проверка ожидаемого результата: statusCode и body")
     public void createOrderWithIncorrectHashIngredientTest() {
         listHashIngredient();
-        ValidatableResponse response =  user.requestCreateUser(createUser);
+        ValidatableResponse response = user.requestCreateUser(createUser);
         bearerToken = response.extract().path("accessToken");
         ValidatableResponse responseCreateOrder = CreateOrderApi.createOrder(createOrder, bearerToken);
         responseCreateOrder.assertThat().statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
@@ -84,6 +84,7 @@ public class CreateOrderTest {
         ingredients.add(list.get(4).repeat(1));
         ingredients.add(list.get(2).repeat(2));
     }
+
     @After
     public void tearDown() {
         user.userDelete(bearerToken);

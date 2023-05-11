@@ -1,5 +1,6 @@
-package ru.checkapi.user;
-import static ru.checkapi.user.GeneratorRandom.faker;
+package ru.check_api.user;
+
+import static ru.check_api.user.GeneratorRandom.faker;
 
 public class UserCreds {
 

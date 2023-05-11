@@ -1,4 +1,4 @@
-package ru.checkapi.user;
+package ru.check_api.user;
 
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -13,9 +13,11 @@ public class User {
     private static final String LOGIN_PATH = "api/auth/login";
     public static final String DELETE_USER_API = "api/auth/user";
     public static final String CHANGE_DATA_USER_API = "api/auth/user";
+
     public User() {
         RestAssured.baseURI = BASE_URI;
     }
+
     @Step("Создание пользователя")
     public ValidatableResponse requestCreateUser(CreateUser user) {
         return given()
@@ -46,6 +48,7 @@ public class User {
                 .delete(DELETE_USER_API + bearerToken)
                 .then();
     }
+
     @Step("Изменение данных авторизованного пользователя")
     public ValidatableResponse changeDataUserWithAuth(UserCreds userCreds, String bearerToken) {
         return given()
@@ -57,6 +60,7 @@ public class User {
                 .patch(CHANGE_DATA_USER_API)
                 .then();
     }
+
     @Step("Изменение данных не авторизованного пользователя")
     public ValidatableResponse changeDataUserWithoutAuth(UserCreds userCreds) {
         return given()

@@ -1,4 +1,4 @@
-package ru.checkapi.user;
+package ru.check_api.user;
 
 public class CreateUser {
     private String email;
